@@ -1,0 +1,119 @@
+<div class="card">
+    <div class="card-header ps-5 pt-4 pb-4">
+        <h5 class="mb-0"><i class="fa-solid fa-location-dot me-2"></i>Actualizar un negocio</h5>
+    </div>
+    <div class="card-body p-5">
+        <form #f="ngForm">
+
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label">Descripción: </label>
+                <div class="col-sm-10">
+                    <textarea #descripcion="ngModel"
+                        [ngClass]="descripcion.invalid && descripcion.dirty ? 'is-invalid' : ''" type="text"
+                        [(ngModel)]="actualizarNegocioDTO.descripcion" name="descripcion" required
+                        class="form-control"></textarea>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label">Ubicación: </label>
+                <div class="col-sm-10">
+                    <div id="mapa"></div>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label">Imágenes: </label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="file" name="imagenes" (change)="onFileChange($event)" multiple
+                        required />
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label">Horarios: </label>
+                <div class="col-sm-8">
+                    @for (item of horarios; track $index) {
+                    <div class="row mb-2 ">
+
+                        <div class="col">
+                            <select class="form-select" name="dia" required [(ngModel)]="horario.dia">
+                                <option value="" selected>Seleccione un dia</option>
+                                @for (item of dias; track $index) { <option [value]="item">{{item}}</option> }
+                            </select>
+                        </div>
+
+                        <div class="col">
+                            <input class="form-control" placeholder="Hora Inicio" type="time"
+                                name="horaInicio-{{$index}}" [(ngModel)]="item.horaInicio" required />
+                        </div>
+                        <div class="col">
+                            <input class="form-control" placeholder="Hora Fin" type="time" name="horaFin-{{$index}}"
+                                [(ngModel)]="item.horaFin" required />
+                        </div>
+                        <div class="col mb-auto my-1 ">
+                            <button class="btn btn-danger btn-sm " (click)="eliminarHorario()">
+                                <i class="fa-solid fa-circle-plus me-1"></i>Eliminar horario
+                            </button>
+                        </div>
+                    </div>
+
+                    }
+                </div>
+                <div class="col-sm-2 text-end  ">
+                    <button class="btn btn-primary" (click)="agregarHorario()">
+                        <i class="fa-solid fa-circle-plus me-1"></i>Agregar horario
+                    </button>
+                </div>
+            </div>
+
+            <!-- prueba -->
+<div class="mb-3 row">
+    <label class="col-sm-2 col-form-label">Teléfonos: </label>
+    <div class="col-sm-8">
+        @for (item of listaTelefonos; track $index) {
+        <div class="row mb-2 ">
+
+            <div class="col-sm-auto ">
+                <select class="form-select" name="dia" required [(ngModel)]="actualizarNegocioDTO.telefonos">
+                    <option value="" selected>Seleccione el tipo de teléfono</option>
+                    @for (item of tipoTelefono; track $index) { <option [value]="item">{{item}}</option> }
+                </select>
+            </div>
+
+            <div class="col">
+                <input class="form-control" placeholder="Ingrese su número teléfonico" type="tel"
+                    name="telefonos" [(ngModel)]="actualizarNegocioDTO.tipoTelefono" required />
+            </div>
+            
+            <div class="col mb-auto my-1 ">
+                <button class="btn btn-danger btn-sm " (click)="eliminarTelefono()">
+                    <i class="fa-solid fa-circle-plus me-1"></i>Eliminar teléfono
+                </button>
+            </div>
+        </div>
+
+        }
+    </div>
+    <div class="col-sm-2 text-end  ">
+        <button class="btn btn-primary" (click)="agregarTelefono()">
+            <i class="fa-solid fa-circle-plus me-1"></i>Agregar Teléfono
+        </button>
+    </div>
+</div>
+<!-- fin prueba -->
+            <div class="row">
+                <div class="col-3 ">
+
+                    <button class="btn btn-danger  " routerLink="/gestion-negocios">
+                        <i class="fa-solid fa-circle-plus me-1"></i>Cancelar
+                    </button>
+
+                </div>
+                <div class="col-3  ">
+                    <button class="btn btn-success " (click)="actualizarNegocio()" [disabled]="f.invalid">
+                        <i class="fa-solid fa-circle-plus me-1"></i>Actualizar negocio
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

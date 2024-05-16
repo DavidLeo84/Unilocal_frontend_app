@@ -1,0 +1,123 @@
+<div class="card-header ps-5 pt-4 pb-4">
+    <h5 class="mb-0"><i class="fa-solid fa-user-plus me-3  "></i>Registro de un nuevo negocio</h5>
+</div>
+<div class="card-body p-3">
+    <form #f="ngForm" class="mt-3 " (ngSubmit)="crearNegocio()">
+
+        <div class="row ">
+
+            <div class="col-md-6">
+                <label class="col-form-label" for="name">Nombre: </label>
+                <input #nombre="ngModel" class="form-control"
+                    [ngClass]="nombre.invalid && nombre.dirty ? 'is-invalid' : ''" type="text" name="nombre"
+                    [(ngModel)]="registroNegocioDTO.nombre" id="name" />
+            </div>
+
+
+
+            <div class="col-md-6">
+                <label class=" col-form-label" for="codigoCliente">Codigo cliente: </label>
+                <input #codigoCliente="ngModel" class="form-control"
+                    [ngClass]="codigoCliente.invalid && codigoCliente.dirty ? 'is-invalid' : ''" type="text"
+                    name="codigoCliente" [(ngModel)]="registroNegocioDTO.codigoCliente" id="codigoCliente" />
+            </div>
+
+        </div>
+
+        <!-- empieza el modulo de registro de la ubicacion -->
+        <div>
+            <H6 class="text-decoration-underline">Ingrese la ubicación</H6>
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label" for="coordenada1">Latitud: </label>
+                <div class="col-sm-10">
+                    <input #latitud="ngModel" class="form-control"
+                        [ngClass]="latitud.invalid && latitud.dirty ? 'is-invalid' : ''" type="number" name="latitud"
+                        [(ngModel)]="registroNegocioDTO.ubicacion.latitud" id="coordenada1" required />
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label" for="coordenada2">Longitud: </label>
+                <div class="col-sm-10">
+                    <input #longitud="ngModel" class="form-control"
+                        [ngClass]="longitud.invalid && longitud.dirty ? 'is-invalid' : ''" type="number" name="longitud"
+                        [(ngModel)]="registroNegocioDTO.ubicacion.longitud" id="coordenada2" required />
+                </div>
+            </div>
+        </div>
+        <!-- termina el modulo de registro de la ubicacion -->
+        <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label" for="descrip">Descripción del negocio: </label>
+            <div class="col-sm-10">
+                <input #descripcion="ngModel" class="form-control"
+                    [ngClass]="descripcion.invalid && descripcion.dirty ? 'is-invalid' : ''" type="text"
+                    name="descripcion" [(ngModel)]="registroNegocioDTO.descripcion" id="descrip" required />
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label">Tipo de negocio: </label>
+            <div class="col-sm-10">
+                <select class="form-select" name="tipoNegocio" required [(ngModel)]="registroNegocioDTO.tipoNegocios">
+                    <option value="" selected>Seleccione un tipo de negocio</option>
+                    @for (item of tipoNegocios; track $index) { <option [value]="item">{{item}}</option> }
+                </select>
+            </div>
+        </div>
+        <!-- Empieza el modulo de registro horarios  -->
+        <div>
+            <h6 class="text-decoration-underline mt-4">Registre los horarios</h6>
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label mt-3">Días de la semana: </label>
+                <div class="col-sm-10 mt-3">
+                    <select class="form-select" name="dia" required [(ngModel)]="horario.dia">
+                        <option value="" selected>Seleccione un dia</option>
+                        @for (item of dias; track $index) { <option [value]="item">{{item}}</option> }
+                    </select>
+                </div>
+
+            </div>
+            <div class="mb-3 row">
+
+                <label class="col-sm-2 col-form-label" for="horaIn">Hora de apertura del negocio: </label>
+                <div class="col-sm-10">
+                    <input #horaInicio="ngModel" class="form-control"
+                        [ngClass]="horaInicio.invalid && horaInicio.dirty ? 'is-invalid' : ''" type="time"
+                        name="horaInicio" [(ngModel)]="registroNegocioDTO.horarios" id="horaIn" required />
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label" for="horaCerrado">Hora de cerrado del negocio:
+                </label>
+                <div class="col-sm-10">
+                    <input #horaFin="ngModel" class="form-control"
+                        [ngClass]="horaFin.invalid && horaFin.dirty ? 'is-invalid' : ''" type="time" name="horaFin"
+                        [(ngModel)]="registroNegocioDTO.horarios" id="horaCerrado" required />
+                </div>
+            </div>
+
+        </div>
+        <!-- termina el modulo de registro horarios  -->
+        <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label" for="phones">Ingresar telefono(s): </label>
+            <div class="col-sm-10">
+                <input #telefono="ngModel" class="form-control" [ngClass]="telefono.invalid && 
+                telefono.dirty ? 'is-invalid' : ''" type="tel" name="telefono"
+                    [(ngModel)]="registroNegocioDTO.telefonos" maxlength=30 id="phones" required />
+            </div>
+        </div>
+
+        <div class="mb-3 row">
+            <label class="col-sm-2 col-form-label">Subir imagenes: </label>
+            <div class="col-sm-10">
+                <input class="form-control" type="file" name="imagenes" (change)="onFileChange($event)" required />
+            </div>
+        </div>
+
+        <div class="row justify-content-lg-end ">
+            <button class="btn btn-primary btn-lg" type="submit" [disabled]="f.invalid">
+                <i class="fa-solid fa-circle-plus me-1"></i>Registrar Negocio
+            </button>
+        </div>
+
+    </form>
+</div>
