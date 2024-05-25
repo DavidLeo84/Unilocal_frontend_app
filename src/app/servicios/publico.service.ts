@@ -21,4 +21,9 @@ export class PublicoService {
     return this.http.get<MensajeDTO>(`${this.publicoURL}/listar-tipos-negocio`);
   }
 
+  public buscar(palabraBuscada: string): Observable<MensajeDTO> {
+    const texto = palabraBuscada.toLowerCase();
+    return this.http.get<MensajeDTO>(`${this.publicoURL}/listar-negocios-palabra/${texto}`);
+  }
+
 }

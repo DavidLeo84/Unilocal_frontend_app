@@ -9,7 +9,7 @@ export class RegistroNegocioDTO {
         public codigoCliente: string = '',
         public ubicacion: Ubicacion = new Ubicacion(),
         public descripcion: string = '',
-        public tipoNegocios: string[] = [],
+        public tipoNegocios: string = '',
         public horarios: Horario[] = [new Horario()],
         public telefonos: string[] = [],
         public tipoTelefono: string = '',

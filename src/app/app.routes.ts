@@ -20,9 +20,10 @@ export const routes: Routes = [
     { path: 'registroNegocioDTO', component: RegistroNegocioComponent },
     { path: 'registroComentarioDTO', component: RegistroComentarioComponent },
     { path: "gestion-negocios", component: GestionNegociosComponent },
-    { path: "crear-negocio", component: CrearNegocioComponent },
+    { path: "crear-negocio/:codigoCliente", component: CrearNegocioComponent },
     { path: "detalle-negocio/:codigo", component: DetalleNegocioComponent },
-    { path: "actualizar-negocio", component: ActualizarNegocioComponent},
-    { path: "busqueda/:texto", component: BusquedaComponent },
+    { path: "actualizar-negocio/:codigo", component: ActualizarNegocioComponent},
+    //{ path: "busqueda/:texto", component: BusquedaComponent },
+    { path: "busqueda/:palabraBuscada", component: BusquedaComponent },
     { path: "**", pathMatch: "full", redirectTo: "" }
 ];

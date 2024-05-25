@@ -1,7 +1,6 @@
 <div class="card">
     <div class="card-header ps-5 pt-4 pb-4">
-        <h5 class="mb-0"><i class="fa-solid fa-location-dot me-2"></i>Crear un nuevo
-            negocio</h5>
+        <h5 class="mb-0"><i class="fa-solid fa-location-dot me-2"></i>Crear un nuevo negocio</h5>
     </div>
     <div class="card-body p-5">
         <form #f="ngForm">
@@ -10,7 +9,7 @@
                 <div class="col-sm-10">
                     <input #nombre="ngModel" class="form-control"
                         [ngClass]="nombre.invalid && nombre.dirty ? 'is-invalid' : ''" type="text" name="nombre"
-                        [(ngModel)]="registroNegocioDTO.nombre" required />
+                        [(ngModel)]="negocioDTO.nombre" required />
                 </div>
             </div>
             <div class="mb-3 row">
@@ -18,7 +17,7 @@
                 <div class="col-sm-10">
                     <textarea #descripcion="ngModel"
                         [ngClass]="descripcion.invalid && descripcion.dirty ? 'is-invalid' : ''" type="text"
-                        [(ngModel)]="registroNegocioDTO.descripcion" name="descripcion" required
+                        [(ngModel)]="negocioDTO.descripcion" name="descripcion" required
                         class="form-control"></textarea>
                 </div>
             </div>
@@ -28,21 +27,30 @@
                     <div id="mapa"></div>
                 </div>
             </div>
-            <div class="mb-3 row">
+            <!-- <div class="mb-3 row">
                 <label class="col-sm-2 col-form-label">Imágenes: </label>
                 <div class="col-sm-10">
                     <input class="form-control" type="file" name="imagenes" (change)="onFileChange($event)" multiple
                         required />
                 </div>
+            </div> -->
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label">Imágenes: </label>
+                <div class="col-sm-8">
+                    <input type="file" class="form-control" name="fotoPerfil" (change)="onFileChange($event)" multiple />
+                </div>
+                <div class="col-sm-2">
+                    <button type="submit" [disabled]="archivos == null" class="btn btn-primary" (click)="subirImagen()">
+                        <i class="fa-solid fa-cloud-arrow-up me-2"></i>Subir imagen
+                    </button>
+                </div>
             </div>
             <div class="mb-3 row">
                 <label class="col-sm-2 col-form-label">Tipo: </label>
                 <div class="col-sm-10">
-                    <select name="tipo" required class="form-select" [(ngModel)]="registroNegocioDTO.tipoNegocios">
+                    <select name="tipoNegocios" required class="form-select" [(ngModel)]="negocioDTO.tipoNegocios">
                         <option value="" selected>Seleccione un tipo para el negocio</option>
-                        <option value="">Comidas Rapidas</option>
-                        <!-- Completar (se puede basar en cómo se cargan las ciudades del
-        formulario de registro de clientes) -->
+                        @for (item of tiposNegocios; track $index) { <option [value]="item">{{item}}</option> }
                     </select>
                 </div>
             </div>
@@ -90,16 +98,16 @@
         @for (item of listaTelefonos; track $index) {
         <div class="row mb-2 ">
 
-            <div class="col-sm-auto ">
-                <select class="form-select" name="dia" required [(ngModel)]="registroNegocioDTO.telefonos">
+            <!-- <div class="col-sm-auto ">
+                <select class="form-select" name="dia" required [(ngModel)]="negocioDTO.telefonos">
                     <option value="" selected>Seleccione el tipo de teléfono</option>
                     @for (item of tipoTelefono; track $index) { <option [value]="item">{{item}}</option> }
                 </select>
-            </div>
+            </div> -->
 
             <div class="col">
                 <input class="form-control" placeholder="Ingrese su número teléfonico" type="tel"
-                    name="telefonos" [(ngModel)]="registroNegocioDTO.tipoTelefono" required />
+                    name="telefonos" [(ngModel)]="negocioDTO.telefonos[0]" required />
             </div>
             
             <div class="col mb-auto my-1 ">
@@ -130,6 +138,7 @@
                     <button class="btn btn-primary" (click)="crearNegocio()" [disabled]="f.invalid">
                         <i class="fa-solid fa-circle-plus me-1"></i>Crear negocio
                     </button>
+                    <app-alerta [alerta]="alerta"></app-alerta>
                 </div>
             </div>
         </form>

@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { AuthService } from '../../servicios/auth.service';
 import { AlertaComponent } from '../alerta/alerta.component';
 import { Alerta } from '../../dtos/alerta';
+import { TokenService } from '../../servicios/token.service';
 
 @Component({
   selector: 'app-login',
@@ -18,27 +19,23 @@ export class LoginComponent {
   loginDTO: LoginDTO;
   alerta!: Alerta;
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private tokenService: TokenService) {
+    
     this.loginDTO = new LoginDTO;
   }
-  public iniciarSesion() {
-    if (this.loginDTO.email != "" || this.loginDTO.password != "") {
 
-      this.authService.loginCliente(this.loginDTO).subscribe({
-        next: (data) => {
-          this.alerta = new Alerta(data.mensaje, "success");
-        },
-        error: (error) => {
-          this.alerta = new Alerta(error.error.mensaje, "danger");
-        }
-      });
-      console.log(this.loginDTO)
-    } else {
-      //console.log("El campo email y/o password no pueden estar vacío");
-      this.alerta = new Alerta("El campo email y/o password no pueden estar vacío", "danger");
-    }
+  public login() {
+
+    this.authService.loginCliente(this.loginDTO).subscribe({
+      next: data => {
+        this.tokenService.login(data.mensaje.token);
+      },
+      error: error => {
+        this.alerta = new Alerta(error.error.mensaje, "danger"); // se cambio respuesta por mensaje
+      }
+    });
   }
-  
+
   public estanVacios(): boolean {
     return this.loginDTO.email == "" || this.loginDTO.password == "";
   }
