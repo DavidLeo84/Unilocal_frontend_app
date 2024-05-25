@@ -1,17 +1,28 @@
 <div class="card">
+    <!-- <script>
+        // Ejemplo: Obtener datos del backend y llenar los campos
+        const datos = {
+            nombre: 'Juan',
+            // Agrega más datos aquí
+        };
+
+        document.getElementById('nombre').value = datos.nombre;
+        // Asigna otros valores a los campos según tus datos
+    </script> -->
+
     <div class="card-header ps-5 pt-4 pb-4">
         <h5 class="mb-0"><i class="fa-solid fa-location-dot me-2"></i>Actualizar un negocio</h5>
     </div>
     <div class="card-body p-5">
         <form #f="ngForm">
 
+
             <div class="mb-3 row">
                 <label class="col-sm-2 col-form-label">Descripción: </label>
                 <div class="col-sm-10">
-                    <textarea #descripcion="ngModel"
+                    <textarea #descripcion="ngModel" class="form-control"
                         [ngClass]="descripcion.invalid && descripcion.dirty ? 'is-invalid' : ''" type="text"
-                        [(ngModel)]="actualizarNegocioDTO.descripcion" name="descripcion" required
-                        class="form-control"></textarea>
+                        [(ngModel)]="actualizarNegocioDTO.descripcion" name="actualizarNegocioDTO.#descripcion" required id="actualizarNegocioDTO.descripcion"></textarea>
                 </div>
             </div>
             <div class="mb-3 row">
@@ -20,14 +31,29 @@
                     <div id="mapa"></div>
                 </div>
             </div>
+            <!-- Inicio seccion imagenes -->
             <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label">Imagenes: </label>
+                <div class="col-sm-8">
+                    <input class="form-control" type="file" class="form-control" name="imagenes"
+                        (change)="onFileChange($event)" multiple required />
+                </div>
+                <div class="col-sm-2">
+                    <button type="submit" [disabled]="archivos == null" class="btn btn-primary" (click)="subirImagen()">
+                        <i class="fa-solid fa-cloud-arrow-up me-2"></i>Subir imagenes
+                    </button>
+                </div>
+            </div>
+            <!-- fin seccion imagenes -->
+            <!-- <div class="mb-3 row">
                 <label class="col-sm-2 col-form-label">Imágenes: </label>
                 <div class="col-sm-10">
                     <input class="form-control" type="file" name="imagenes" (change)="onFileChange($event)" multiple
                         required />
                 </div>
-            </div>
+            </div> -->
 
+            <!-- inicio seccion horarios -->
             <div class="mb-3 row">
                 <label class="col-sm-2 col-form-label">Horarios: </label>
                 <div class="col-sm-8">
@@ -64,42 +90,43 @@
                     </button>
                 </div>
             </div>
+            <!-- fin seccion horarios -->
 
-            <!-- prueba -->
-<div class="mb-3 row">
-    <label class="col-sm-2 col-form-label">Teléfonos: </label>
-    <div class="col-sm-8">
-        @for (item of listaTelefonos; track $index) {
-        <div class="row mb-2 ">
+            <!-- seccion telefonos -->
+            <div class="mb-3 row">
+                <label class="col-sm-2 col-form-label">Teléfonos: </label>
+                <div class="col-sm-8">
+                    @for (item of listaTelefonos; track $index) {
+                    <div class="row mb-2 ">
 
-            <div class="col-sm-auto ">
+                        <!-- <div class="col-sm-auto ">
                 <select class="form-select" name="dia" required [(ngModel)]="actualizarNegocioDTO.telefonos">
                     <option value="" selected>Seleccione el tipo de teléfono</option>
                     @for (item of tipoTelefono; track $index) { <option [value]="item">{{item}}</option> }
                 </select>
-            </div>
+            </div> -->
 
-            <div class="col">
-                <input class="form-control" placeholder="Ingrese su número teléfonico" type="tel"
-                    name="telefonos" [(ngModel)]="actualizarNegocioDTO.tipoTelefono" required />
-            </div>
-            
-            <div class="col mb-auto my-1 ">
-                <button class="btn btn-danger btn-sm " (click)="eliminarTelefono()">
-                    <i class="fa-solid fa-circle-plus me-1"></i>Eliminar teléfono
-                </button>
-            </div>
-        </div>
+                        <div class="col">
+                            <input class="form-control" placeholder="Ingrese su número teléfonico" type="tel"
+                                name="telefonos" [(ngModel)]="actualizarNegocioDTO.telefonos" required />
+                        </div>
 
-        }
-    </div>
-    <div class="col-sm-2 text-end  ">
-        <button class="btn btn-primary" (click)="agregarTelefono()">
-            <i class="fa-solid fa-circle-plus me-1"></i>Agregar Teléfono
-        </button>
-    </div>
-</div>
-<!-- fin prueba -->
+                        <div class="col mb-auto my-1 ">
+                            <button class="btn btn-danger btn-sm " (click)="eliminarTelefono()">
+                                <i class="fa-solid fa-circle-plus me-1"></i>Eliminar teléfono
+                            </button>
+                        </div>
+                    </div>
+
+                    }
+                </div>
+                <div class="col-sm-2 text-end  ">
+                    <button class="btn btn-primary" (click)="agregarTelefono()">
+                        <i class="fa-solid fa-circle-plus me-1"></i>Agregar Teléfono
+                    </button>
+                </div>
+            </div>
+            <!-- fin seccion telefonos -->
             <div class="row">
                 <div class="col-3 ">
 
@@ -113,6 +140,7 @@
                         <i class="fa-solid fa-circle-plus me-1"></i>Actualizar negocio
                     </button>
                 </div>
+                <app-alerta [alerta]="alerta"></app-alerta>
             </div>
         </form>
     </div>

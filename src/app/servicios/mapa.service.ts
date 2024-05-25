@@ -41,6 +41,7 @@ export class MapaService {
       });
     });
   }
+
   public pintarMarcadores(negocios: ItemNegocioDTO[]) {
     negocios.forEach(negocio => {
       new mapboxgl.Marker()
@@ -49,4 +50,23 @@ export class MapaService {
         .addTo(this.mapa);
     });
   }
+
+  // pintarMarcadores(negocios: ItemNegocioDTO[]) {
+  //   negocios.forEach(negocio => {
+  //     const popupContent = `
+  //       <div class="popup-content">
+  //         <img src="${negocio.imagenDestacada}" alt="${negocio.nombre}" />
+  //         <h3>${negocio.nombre}</h3>
+  //         <p>${negocio.abierto ? 'Abierto' : 'Cerrado'}</p>
+  //         <p>Tipo: ${negocio.tipo}</p>
+  //       </div>
+  //     `;
+  
+  //     new mapboxgl.Marker()
+  //       .setLngLat([negocio.ubicacion.longitud, negocio.ubicacion.latitud])
+  //       .setPopup(new mapboxgl.Popup().setHTML(popupContent))
+  //       .addTo(this.mapa);
+  //   });
+  // }
+  
 }
